@@ -53,7 +53,7 @@ def ads_scrapper_indeed(link, keyword=None):
     else:
         rating = rating.split()[0]
 
-    ad_info = [title, company, rating, location, description, keyword,  link]
+    ad_info = [title, company, rating, location, description, keyword, link]
     return ad_info
  
 
