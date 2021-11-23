@@ -3,21 +3,20 @@ import re
 import time
 from bs4 import BeautifulSoup
 import math
-import csv
 
 
-def links_scrapper(title, location="United Kingdom", num_pages=50):
+def links_scrapper(keyword, location="United Kingdom", num_pages=50):
 
-    # Add job title to search. Any space will be replaced for %20
+    # Add job keyword to search. Any space will be replaced for %20
 
-    title = title
-    title = title.replace(" ", "%20")
+    keyword = keyword
+    keyword = keyword.replace(" ", "%20")
 
     # Add location to search. Any space will be replaced for %20
     location = location
     location = location.replace(" ", "%20")
 
-    base_url = "https://www.indeed.co.uk/jobs?q="+title+"&l="+location
+    base_url = "https://www.indeed.co.uk/jobs?q="+keyword+"&l="+location
 
     # First url to check for number of ads stracting
     first_url = base_url + "&start=0"
@@ -26,7 +25,7 @@ def links_scrapper(title, location="United Kingdom", num_pages=50):
     first_page = requests.get(first_url)
 
     # sleep for 5 secs to avoid the site recognising the script as a bot and
-    #  blocking our IP 
+    #  blocking our IP
     time.sleep(5)
 
     # specifying a desired format of “page” using the html parser - 
@@ -114,12 +113,4 @@ def links_scrapper(title, location="United Kingdom", num_pages=50):
         all_ads_links = all_ads_links + links_ads(link_pages[page])
 
     return all_ads_links
-
-
-all_links = links_scrapper("Data Analyst", 
-                           location="United Kingdom", num_pages=10)
-
-with open('all_ads_links.csv', 'w') as f:
-    # using csv.writer method from CSV package
-    csv.writer(f, delimiter='\n').writerow(all_links)
 
